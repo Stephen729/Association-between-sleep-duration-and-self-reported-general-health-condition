@@ -1,0 +1,51 @@
+# Methods
+
+## Sample
+
+Our investigation into the link between sleep and general health leverages a robust sample of 4,478 individuals drawn from the 2017-2018 National Health and Nutrition Examination Survey (NHANES). This nationally representative survey, conducted by the Centers for Disease Control and Prevention (CDC), utilizes a meticulous multistage probability design to ensure its participants accurately reflect the U.S. population. Our subsample was meticulously chosen based on the availability of relevant data for our research variables, including sleep duration, race, gender, general health, and moderate work activity. This rich dataset provides a powerful foundation for our exploration of the potential association between weekday sleep patterns and overall well-being.
+Measures
+
+This study utilized the National Health and Nutrition Examination Survey (NHANES) data to explore the association between sleep duration and overall health. Employing RStudio, relevant variables were meticulously extracted from XPT files, including general health, physical activity, sleep, gender, and race. The data manipulation was facilitated using the "haven" and "tidyverse" packages, leading to a sample size of 4478 observations after merging files based on the unique patient identifier ("SEQN") and omitting missing values. 
+The analysis focused on sleep duration as the dependent variable, with general health as the primary independent variable. This health assessment was based on self-reported measures in the NHANES survey. To understand the multifaceted relationship between sleep and health more comprehensively, race, gender, and moderate physical activity were included as covariates. 
+The categorical variables were recoded for clarity: general health into three levels (good, average, poor), sleep duration into short (<6 hours), normal (6-9 hours), or long (>9 hours), and moderate activity into a binary variable, which is Yes(1) and No (2). Furthermore, race was categorized into three groups: Non-Hispanic white, Non-Hispanic black, and others. This approach aimed to clarify the complex interactions between these variables and their collective impact on sleep patterns and overall well-being, drawing meaningful conclusions from the NHANES dataset.
+
+## Descriptive table
+Variable 	Question	Value Label	Frequency	Percent(%)	P-value
+ChiSq
+Sleep	How many hours do you usually sleep on weekdays?	1=Long	1018	19.81%	<.0001
+		2=Normal	2989	71.52%	
+		3=Short	474	8.67%	
+General Health	What would you say about your health’s condition?  	1=Good Health	1703	46.26%	<.0001
+		2=Average Health	1673	35.37%	
+		3=Poor 
+Health	1105	18.37%	
+Moderate Physical activity	Does your work involve moderate-intensity activity that causes a small increase in breathing or heart rate?	1=Yes	1982	49.91%	0.9465
+		2=No	2499	50.09%	
+Gender	What is your gender?	1=Male	2278	49.22%	0.4987
+		2=Female	2203	50.78%	
+Race	What is your race?	1=Non-Hispanic White	1663	64.42%	<.0001
+		2=Non-Hispanic Black	1052	10.88%	
+		3=Others	1766	24.7%	
+Total			4481	100%	
+
+## Characteristics of the sample:
+
+Our study gathered data on sleep patterns and overall health from a diverse group of 4,481 participants. Sleep habits varied, with 20% experiencing long sleep durations, 72% enjoying the recommended 6-9 hours, and 8% experiencing shorter sleep periods. Similarly, general health exhibited a spectrum, with 46% reporting good health, 35% experiencing average health, and 19% facing challenges with poor health.
+To further understand these relationships, we considered several factors. Half the participants (50%) reported engaging in moderate physical activity, while the other half didn't. Gender was equally balanced, with 49% identifying as male and 51% as female. Finally, the racial makeup of the sample reflected the rich diversity of our population, with 64% identifying as non-Hispanic White, 11% as non-Hispanic Black, and 25% belonging to other racial groups.
+Sleep patterns paint a varied picture. 20% experience long sleep durations, while 72% enjoy the recommended 6-9 hours. The remaining 8% navigate shorter sleep periods. A spectrum emerges when considering overall health. 46% report good health, 35% encounter average health, and 19% grapple with challenges related to poor health. For our covariates variables, Moderate Physical Activity with 50% engaging in regular activity and 50% not; Gender is with 49% identifying as male and 51% as female; And Race reflects the diverse population, with 64% identifying as non-Hispanic White, 11% as non-Hispanic Black, and 25% belonging to other racial groups.
+
+## Dependent variable: 
+### Sleep 
+According to the National Sleep Foundation, 7 to 9 hours is recommended for young adults and adults, for our dataset, we recode the sleep duration variables into short (<6 hours), normal (6-9 hours), or long (>9 hours), participants chose the number of hours they sleep on a typical weekday from the 3 categories (Chaput,2018).
+
+## Primary Independent variable: 
+### General Health:
+Individuals' self-assessment of their general health condition, categorized into three distinct levels. A significant proportion, approximately 46.26%(n=1703) of respondents, reported being in "Good Health" (coded as 1), indicating that they perceive their health as favorable. A sizable portion, approximately 35.37%(n=1673) of the participants, described their health as "Average" (coded as 2), suggesting a more moderate assessment. Meanwhile, about 18.37%(n=1105) of the individuals reported their health as "Poor" (coded as 3), indicating a less favorable perception of their overall health.
+
+
+## Covariates:
+### Moderate activity:
+Participants split evenly on moderate activity, with 50% exercising regularly and 50% not. While this balanced distribution allows for robust analysis, the initial findings show no statistically significant difference in sleep duration between the two groups. 
+### Gender:
+Our participants were evenly divided between genders, with 49% identifying as male and 51% as female. While initial analysis reveals no statistically significant difference in sleep duration between genders (p-value = 0.4987).Race:
+Our participants from backgrounds, with Non-Hispanic White individuals making up 64%, followed by "Other" at 25% and Non-Hispanic Black at 11%. This rich tapestry sets the stage for understanding how sleep patterns might differ across these groups. Interestingly, the p-value for the association between race and sleep duration is incredibly low (<0.0001), suggesting statistically significant differences worth exploring further.
