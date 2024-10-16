@@ -1,0 +1,64 @@
+install.packages("haven")
+library(tidyverse)
+library(haven)
+
+gh <- read_xpt("/Users/henlishih/Desktop/HenLi Shih/SLU/fall 2023/BST 5210 categorial data analysis/group project/dataset/HUQ_J general health.xpt")
+de <- read_xpt("/Users/henlishih/Desktop/HenLi Shih/SLU/fall 2023/BST 5210 categorial data analysis/group project/dataset/DPQ_J depression.xpt")
+phy <- read_xpt("/Users/henlishih/Desktop/HenLi Shih/SLU/fall 2023/BST 5210 categorial data analysis/group project/dataset/PAQ_J moderate activity.xpt")
+sleep <-read_xpt("/Users/henlishih/Desktop/HenLi Shih/SLU/fall 2023/BST 5210 categorial data analysis/group project/dataset/SLQ_J sleep disorder.xpt")
+alco <- read_xpt("/Users/henlishih/Desktop/HenLi Shih/SLU/fall 2023/BST 5210 categorial data analysis/group project/dataset/ALQ_J alcohol.xpt")
+demo <- read_xpt("/Users/henlishih/Desktop/HenLi Shih/SLU/fall 2023/BST 5210 categorial data analysis/group project/dataset/2017-2018 NHANES HUQ data.XPT")
+demogra <- read.xport("/Users/henlishih/Desktop/HenLi Shih/SLU/fall 2023/BST 5400 Applied Data management/Final Project/NHANES Demographics 2017-2018.XPT")
+
+new_demo <-read_xpt("/Users/henlishih/Desktop/HenLi Shih/SLU/fall 2023/BST 5210 categorial data analysis/group project/R data cleaning/2017-2018 Demographics XPT.XPT")
+#--------------------------------------------------------
+
+demographic <- new_demo %>% 
+  select(SEQN, SDMVPSU, SDMVSTRA, WTINT2YR, WTMEC2YR)
+gh <- gh %>% 
+  select(SEQN, HUQ010)
+de <- de %>% 
+  select(SEQN, DPQ020)
+phy <- phy %>% 
+  select(SEQN, PAQ620)
+sleep <- sleep %>% 
+  select(SEQN, SLD012)
+alco <- alco %>% 
+  select(SEQN, ALQ121)
+demogra <- demogra %>% 
+  select(SEQN, RIAGENDR, RIDRETH3)
+
+View(demographic)
+
+#--------------------------------------------------------
+merged_data <- merge(gh, de, by = "SEQN")
+merged_data <- merge(merged_data, sleep, by = "SEQN")
+merged_data <- merge(merged_data, phy, by = "SEQN")
+merged_data <- merge(merged_data, alco, by = "SEQN")
+merged_data <- merge(merged_data, demogra, by = "SEQN")
+merged_data <- merge(merged_data, demographic, by = "SEQN")
+
+final <- merged_data
+View(final)
+#--------------------------------------------------------
+final <- final %>% 
+  rename(
+  'ID'  =SEQN,
+  'general'  =HUQ010,
+  'depression'  =DPQ020,
+   'moderate_activity' =PAQ620 ,
+  'sleep_hours'  =SLD012 ,
+  'alcohol_freq'  =ALQ121,
+  'Gender' = RIAGENDR,
+  'Race' = RIDRETH3
+  )
+final_data <- final %>% 
+  na.omit()
+summarise(final_data)
+
+View(final_data) #4489 obs
+
+setwd("/Users/henlishih/Desktop/HenLi Shih/SLU/fall 2023/BST 5210 categorial data analysis/group project/R data cleaning")
+getwd()
+final_csv = write.csv(final_data , file= "5210_dataset_new.csv")
+
