@@ -1,0 +1,42 @@
+FILENAME REFFILE '/home/u59304328/Categorical final/5210_dataset_new.csv';
+
+PROC IMPORT DATAFILE=REFFILE
+	DBMS=CSV
+	OUT=WORK.CATF;
+	GETNAMES=YES;
+RUN;
+
+PROC CONTENTS DATA=CATF; RUN;
+
+data Final_11;
+    set CATF;
+       if general in (7, 9) then delete;
+    else if general in (1, 2) then gen_health = '1';
+    else if general = 3 then gen_health = '2';
+    else if general in (4, 5) then gen_health = '3';
+
+if sleep_hours >= 2 and sleep_hours < 6 then sleep = 'Short ';
+    else if sleep_hours >= 6 and sleep_hours < 9 then sleep = 'Normal';
+    else if sleep_hours >= 9 then sleep = 'Long';
+    
+  if moderate_activity=9 then delete;
+    
+    if gender = 1 then gender_new = 'Male      ';
+    else if gender = 2 then gender_new = 'Female     ';
+    
+     if race = 3 then race_new = '1';
+    else if race = 4 then race_new = '2';
+    else race_new = '3';
+run;
+data finaldata_11;
+set Final_11;
+keep ID gen_health sleep moderate_activity  gender race_new SDMVPSU SDMVSTRA WTINT2YR WTMEC2YR ;
+rename  moderate_activity=activity  race_new = race  ;
+run;
+
+Proc surveyfreq data=finaldata_11;
+  stratum sdmvstra;
+  cluster sdmvpsu;
+  weight wtint2yr;  *wtmec2yr; 
+  tables sleep gen_health activity gender race/col row nostd nowt wchisq wllchisq chisq chisq1; 
+Run;
